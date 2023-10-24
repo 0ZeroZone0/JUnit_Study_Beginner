@@ -1,5 +1,5 @@
 package site.metacoding.junitproject.web;
 
-public class BookApiController {
+public class BookApiControllerTest {
 
 }
