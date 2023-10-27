@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.jdbc.Sql;
 
 @DataJpaTest // DB 와 관련된 컴포넌트만 메모리에 로딩
 public class BookRepositoryTest {
@@ -72,6 +73,7 @@ public class BookRepositoryTest {
     }// 트랜잭션 종료 (저장된 데이터를 초기화함)
 
     // 3. 책 한건보기
+    @Sql("classpath:db/tableInit.sql")
     @Test
     public void 책한건보기_test() {
         // given
@@ -90,6 +92,7 @@ public class BookRepositoryTest {
     // 4. 책 수정
 
     // 5. 책 삭제
+    @Sql("classpath:db/tableInit.sql")
     @Test
     public void 책삭제_test() {
         // given
