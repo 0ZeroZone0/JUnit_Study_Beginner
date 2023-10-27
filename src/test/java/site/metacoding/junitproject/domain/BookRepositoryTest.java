@@ -1,6 +1,7 @@
 package site.metacoding.junitproject.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.List;
 
@@ -89,5 +90,17 @@ public class BookRepositoryTest {
     // 4. 책 수정
 
     // 5. 책 삭제
+    @Test
+    public void 책삭제_test() {
+        // given
+        Long id = 1L;
+
+        // when
+        bookRepository.deleteById(id);
+
+        // then
+        assertFalse(bookRepository.findById(id).isPresent()); // false 일때 성공
+
+    }
 
 }
