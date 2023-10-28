@@ -89,9 +89,7 @@ public class BookRepositoryTest {
 
     }
 
-    // 4. 책 수정
-
-    // 5. 책 삭제
+    // 4. 책 삭제
     @Sql("classpath:db/tableInit.sql")
     @Test
     public void 책삭제_test() {
@@ -103,6 +101,46 @@ public class BookRepositoryTest {
 
         // then
         assertFalse(bookRepository.findById(id).isPresent()); // false 일때 성공
+
+    }
+
+    // 1. junit, 겟인데어
+    // 5. 책 수정
+    @Sql("classpath:db/tableInit.sql")
+    @Test
+    public void 책수정_test() {
+        // given
+        Long id = 1L;
+        String title = "junit5";
+        String author = "메타코딩";
+        Book book = new Book(id, title, author);
+
+        // when
+        /*
+         * bookRepository.findAll().stream()
+         * .forEach((b) -> {
+         * System.out.println(b.getId());
+         * System.out.println(b.getTitle());
+         * System.out.println(b.getAuthor());
+         * System.out.println(" 1 : ===================");
+         * });
+         */
+
+        Book bookPS = bookRepository.save(book);
+        /*
+         * bookRepository.findAll().stream()
+         * .forEach((b) -> {
+         * System.out.println(b.getId());
+         * System.out.println(b.getTitle());
+         * System.out.println(b.getAuthor());
+         * System.out.println(" 2 : ===================");
+         * });
+         */
+
+        // then
+        assertEquals(id, bookPS.getId());
+        assertEquals(title, bookPS.getTitle());
+        assertEquals(author, bookPS.getAuthor());
 
     }
 
