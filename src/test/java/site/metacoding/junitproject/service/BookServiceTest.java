@@ -2,6 +2,7 @@ package site.metacoding.junitproject.service;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.assertj.core.api.Assertions.*;
@@ -73,6 +74,25 @@ public class BookServiceTest {
         assertThat(bookRespDtoList.get(1).getTitle()).isEqualTo("springboot");
         assertThat(bookRespDtoList.get(0).getAuthor()).isEqualTo("스프링부트");
         assertThat(bookRespDtoList.get(1).getAuthor()).isEqualTo("스프링");
+
+    }
+
+    @Test
+    public void 책한건보기_테스트() {
+        // given
+        Long id = 1L;
+        Book book = new Book(1L, "junit5", "스프링부트");
+        Optional<Book> bookOP = Optional.of(book);
+
+        // stub
+        when(bookRepository.findById(id)).thenReturn(bookOP);
+
+        // when
+        BookRespDto bookRespDto = bookService.책한건보기(id);
+
+        // then
+        assertThat(bookRespDto.getTitle()).isEqualTo(book.getTitle());
+        assertThat(bookRespDto.getAuthor()).isEqualTo(book.getAuthor());
 
     }
 
