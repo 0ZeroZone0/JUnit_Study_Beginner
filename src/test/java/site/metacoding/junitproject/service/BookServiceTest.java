@@ -18,8 +18,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import site.metacoding.junitproject.domain.Book;
 import site.metacoding.junitproject.domain.BookRepository;
 import site.metacoding.junitproject.util.MailSender;
-import site.metacoding.junitproject.web.dto.BookRespDto;
-import site.metacoding.junitproject.web.dto.BookSaveReqDto;
+import site.metacoding.junitproject.web.dto.request.BookSaveReqDto;
+import site.metacoding.junitproject.web.dto.response.BookRespDto;
 
 @ExtendWith(MockitoExtension.class)
 public class BookServiceTest {
@@ -99,21 +99,21 @@ public class BookServiceTest {
     @Test
     public void 책수정하기_테스트() {
 
-        //given
+        // given
         Long id = 1L;
         BookSaveReqDto dto = new BookSaveReqDto();
         dto.setTitle("springboot");
         dto.setAuthor("코딩코딩");
 
-        //stub
+        // stub
         Book book = new Book(1L, "junit5", "메타코딩");
         Optional<Book> bookOP = Optional.of(book);
         when(bookRepository.findById(id)).thenReturn(bookOP);
 
-        //when
+        // when
         BookRespDto bookRespDto = bookService.책수정하기(id, dto);
 
-        //then
+        // then
         assertThat(bookRespDto.getTitle()).isEqualTo(dto.getTitle());
         assertThat(bookRespDto.getAuthor()).isEqualTo(dto.getAuthor());
 
