@@ -19,6 +19,7 @@ import site.metacoding.junitproject.domain.Book;
 import site.metacoding.junitproject.domain.BookRepository;
 import site.metacoding.junitproject.util.MailSender;
 import site.metacoding.junitproject.web.dto.request.BookSaveReqDto;
+import site.metacoding.junitproject.web.dto.response.BookListRespDto;
 import site.metacoding.junitproject.web.dto.response.BookRespDto;
 
 @ExtendWith(MockitoExtension.class)
@@ -56,6 +57,7 @@ public class BookServiceTest {
 
     }
 
+    // 체크 포인트
     @Test
     public void 책목록보기_테스트() {
         // given(파라매터로 들어올 데이터)
@@ -67,13 +69,13 @@ public class BookServiceTest {
         when(bookRepository.findAll()).thenReturn(books);
 
         // when(실행)
-        List<BookRespDto> bookRespDtoList = bookService.책목록보기();
+        BookListRespDto bookListRespDto = bookService.책목록보기();
 
         // then(검증)
-        assertThat(bookRespDtoList.get(0).getTitle()).isEqualTo("junit5");
-        assertThat(bookRespDtoList.get(1).getTitle()).isEqualTo("springboot");
-        assertThat(bookRespDtoList.get(0).getAuthor()).isEqualTo("스프링부트");
-        assertThat(bookRespDtoList.get(1).getAuthor()).isEqualTo("스프링");
+        assertThat(bookListRespDto.getItems().get(0).getTitle()).isEqualTo("junit5");
+        assertThat(bookListRespDto.getItems().get(1).getTitle()).isEqualTo("springboot");
+        assertThat(bookListRespDto.getItems().get(0).getAuthor()).isEqualTo("스프링부트");
+        assertThat(bookListRespDto.getItems().get(1).getAuthor()).isEqualTo("스프링");
 
     }
 
