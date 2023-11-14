@@ -18,16 +18,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 
-import site.metacoding.junitproject.service.BookService;
 import site.metacoding.junitproject.web.dto.request.BookSaveReqDto;
 
 //통합테스트(Controller, Service, Repository)
 // 컨트롤러만 테스트하는 것이 아님
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class BookApiControllerTest {
-
-    @Autowired
-    private BookService bookService;
 
     @Autowired
     private TestRestTemplate rt;
@@ -64,15 +60,6 @@ public class BookApiControllerTest {
 
         assertThat(title).isEqualTo("스프링");
         assertThat(author).isEqualTo("헬로스프링부트");
-    }
-
-    @Test
-    public void di_test() {
-        if (bookService == null) {
-            System.out.println("null 이에요");
-        } else {
-            System.out.println("null 아니에요");
-        }
     }
 
 }
