@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -75,12 +76,26 @@ public class BookApiController {
     public ResponseEntity<?> deleteBook(@PathVariable Long id) {
         bookService.책삭제하기(id);
         return new ResponseEntity<>(CMRespoDto.builder().code(1).msg("글 삭제하기 성공").body(null).build(),
-                HttpStatus.OK); // 201 = insert
+                HttpStatus.OK); // 200 = OK
     }
 
     // 5. 책 수정하기
-    public ResponseEntity<?> updateBook() {
-        return null;
+    @PutMapping("/api/v1/book/{id}")
+    public ResponseEntity<?> updateBook(@PathVariable Long id, @RequestBody @Valid BookSaveReqDto bookSaveReqDto,
+            BindingResult bindingResult) {
+
+        // 후에 AOP 처리하는게 좋음
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errorMap = new HashMap<>();
+            for (FieldError fe : bindingResult.getFieldErrors()) {
+                errorMap.put(fe.getField(), fe.getDefaultMessage());
+            }
+            throw new RuntimeException(errorMap.toString());
+        }
+
+        BookRespDto bookRespDto = bookService.책수정하기(id, bookSaveReqDto);
+        return new ResponseEntity<>(CMRespoDto.builder().code(1).msg("글 수정하기 성공").body(bookRespDto).build(),
+                HttpStatus.OK); // 200 = OK
     }
 
 }
