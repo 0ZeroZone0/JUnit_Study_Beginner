@@ -45,11 +45,9 @@ public class BookApiControllerTest {
         headers.setContentType(MediaType.APPLICATION_JSON);
     }
 
-    // @BeforeAll //테스트 시작전에 한번만 실행
     @BeforeEach // 각 테스트 시작전에 한번씩 실행
     public void 데이터준비() {
         System.out.println("===================================");
-
         String title = "junit";
         String author = "스프링부트";
         Book book = Book.builder()
@@ -57,6 +55,28 @@ public class BookApiControllerTest {
                 .author(author)
                 .build();
         bookRepository.save(book);
+    }
+
+    @Sql("classpath:db/tableInit.sql")
+    @Test
+    public void getBookOne_test() { // getBookOne_test 시작 전에 BeforeEach를 시작하는데 이 모든것 전에 테이블을 초기화를 한번 함.
+        // given
+        Integer id = 1;
+
+        // when
+        HttpEntity<String> request = new HttpEntity<>(null, headers);
+        ResponseEntity<String> response = rt.exchange("/api/v1/book/" + id, HttpMethod.GET, request, String.class);
+
+        System.out.println(response.getBody());
+
+        // then
+        DocumentContext dc = JsonPath.parse(response.getBody());
+        Integer code = dc.read("$.code");
+        String title = dc.read("$.body.title");
+
+        assertThat(code).isEqualTo(1);
+        assertThat(title).isEqualTo("junit");
+
     }
 
     @Sql("classpath:db/tableInit.sql")
