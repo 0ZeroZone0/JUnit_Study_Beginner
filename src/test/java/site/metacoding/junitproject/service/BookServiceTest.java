@@ -14,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.context.ActiveProfiles;
 
 import site.metacoding.junitproject.domain.Book;
 import site.metacoding.junitproject.domain.BookRepository;
@@ -22,6 +23,7 @@ import site.metacoding.junitproject.web.dto.request.BookSaveReqDto;
 import site.metacoding.junitproject.web.dto.response.BookListRespDto;
 import site.metacoding.junitproject.web.dto.response.BookRespDto;
 
+@ActiveProfiles("dev")
 @ExtendWith(MockitoExtension.class)
 public class BookServiceTest {
 
